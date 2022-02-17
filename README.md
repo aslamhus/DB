@@ -7,3 +7,7 @@ composer require aslamhus/db
 ```
 
 ## More to come soon
+
+## Author
+
+aslamhus
