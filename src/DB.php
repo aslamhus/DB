@@ -224,7 +224,8 @@
          * except that it will always return results in
          * a sequential array.
          * Compare with a regular select, which will return
-         * a single result as an associative array.
+         * a single result as an associative array or an
+         * empty result set as 0 (false)
          * Therefore a foreach/while loop is necessary
          * to reach the results of selectAll every time.
          *
@@ -234,7 +235,11 @@
         {
             $args = func_get_args();
             $result = $this->select(...$args);
+            if (empty($result)) {
+                return [];
+            }
             $isAssociativeArray = $this->isAssoc($result);
+            
             if ($isAssociativeArray) {
                 return [ $result ];
             }
