@@ -1,0 +1,5 @@
+/vendor/
+src/.validcolumns
+src/.validtables
+.env
+.DS_Store
