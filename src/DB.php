@@ -297,7 +297,7 @@
                     $this->status[] = "Select. Failed to fetch assoc. Error: ".$this->conn->error;
                     return false;
                 }
-                return $select;
+                return [$select];
             }
             $returnArray = array();
             while ($row = $result->fetch_assoc()) {
