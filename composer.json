@@ -1,0 +1,20 @@
+{
+  "name": "aslamhusain/db",
+  "description": "A class for handling mysql database",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "aslamhus",
+      "email": "aslam.percy.husain@gmail.com"
+    }
+  ],
+  "require": {
+    "vlucas/phpdotenv": "^5.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Database\\": "src"
+    }
+  }
+}

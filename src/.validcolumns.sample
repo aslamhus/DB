@@ -1,0 +1,32 @@
+*
+DATE_FORMAT(`user_registered` '%Y-%m-%dT%TZ') as `user_registered_f`
+DATE_FORMAT(`user_last_session` '%Y-%m-%dT%TZ') as `user_last_session_f`
+DATE_FORMAT(`session_start` '%Y-%m-%dT%TZ') as `session_start`
+id
+verify_token
+verify_count
+user_id
+user_login
+user_firstname
+user_email
+user_password
+press
+resume
+resumeLink
+talentCoordination
+LAST_INSERT_ID()
+thumb
+photo
+code
+pageName
+index
+hashed_validator
+themeName
+css
+bgImg
+blurImg
+anchor
+colorOverlay
+fontColors
+activeTheme
+AUTO_INCREMENT
