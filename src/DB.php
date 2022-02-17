@@ -208,9 +208,38 @@
             return true;
         }
 
-        
+        public function isAssoc(array $arr)
+        {
+            if (array() === $arr) {
+                return false;
+            }
+            return array_keys($arr) !== range(0, count($arr) - 1);
+        }
 
-       
+
+        /**
+         * selectAll
+         *
+         * Select all is equivalent to a normal select,
+         * except that it will always return results in
+         * a sequential array.
+         * Compare with a regular select, which will return
+         * a single result as an associative array.
+         * Therefore a foreach/while loop is necessary
+         * to reach the results of selectAll every time.
+         *
+         * @return array
+         */
+        public function selectAll() : array
+        {
+            $args = func_get_args();
+            $result = $this->select(...$args);
+            $isAssociativeArray = $this->isAssoc($result);
+            if ($isAssociativeArray) {
+                return [ $result ];
+            }
+            return $result;
+        }
 
         public function select()
         {
@@ -237,7 +266,6 @@
                 default:
                     throw new \Exception("Invalid arguments");
             }
-            //$columns, $table, $condition, $order
             $this->check_connection();
             $this->isTableValid($table);
             if (!$this->isColumnValid($columns)) {
@@ -264,8 +292,6 @@
                 $sql .= $order;
             }
             $sql .= ";";
-            // echo count($conditionObj->vars);
-            // echo "<br/>".$sql."<br/>";
             $this->lastSql = $sql;
             if (!$query = $this->conn->prepare($sql)) {
                 $this->status[] = "Select prepare failed. Error: ".$this->conn->error;
@@ -297,16 +323,15 @@
                     $this->status[] = "Select. Failed to fetch assoc. Error: ".$this->conn->error;
                     return false;
                 }
-                return [$select];
+                return $select;
             }
             $returnArray = array();
             while ($row = $result->fetch_assoc()) {
                 // return array result
                 $returnArray[] = $row;
             }
-
-
             $query->close();
+
             return $returnArray;
         }
         

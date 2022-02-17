@@ -20,7 +20,15 @@ $db = new DB();
 
 
 $result = $db->select("*", "albumNames");
+echo "<h1>Select</h1>";
 echo "<pre>";
 print_r($result);
 echo "</pre>";
-echo "Testing";
+
+$allResult = $db->selectAll("*", "albumNames");
+echo "<h1>SelectAll</h1>";
+echo "<pre>";
+print_r($allResult);
+
+
+echo "</pre>";
