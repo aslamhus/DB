@@ -17,7 +17,7 @@ composer require aslamhus/db
 
 ## Getting started
 
-### Configuration your database
+### Configuring your database
 
 In order to connect to your database, you'll need to set your database configuration in env variables.
 
@@ -30,8 +30,8 @@ composer require "vlucas/phpdotenv"
 #### 2. create .env file in root directory with the following variables
 
 ```bash
-// sets the development mode (possible values, "DEV" or
-DEV = "DEV" "PRODUCTION")
+// sets the development mode (possible values, "DEV" or "PRODUCTION")
+DEV = "DEV"
 // your db hostname
 DB_HOST = "localhost"
 // your db name
@@ -66,13 +66,13 @@ More information on [dotenv](https://github.com/vlucas/phpdotenv)
 
 ### Connect to the database
 
-Require your config.php file and then invoke the DB class.
+Require your config.php file and then instantiate the DB class.
 
 ```php
 
 require_once 'config.php'
 
-use DB;
+use Database\DB;
 
 $db = new DB();
 
