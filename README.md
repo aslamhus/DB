@@ -94,9 +94,18 @@ $db = new DB();
 
 That's it! You should now be connected to your database. You can begin making queries.
 
+### Optional: Allowlist for table names and columns
+
+If you would like to add an extra layer of security, you can create an allow list of valid table names and valid column names in your mysql queries.
+
+Create two text files in the src directory, '.validcolumns' and '.validtables'
+Separate names of valid tables and valid columns by line breaks.
+`DB` will then only perform queries on valid columns or tables.
+If the files are left blank or do not exist, all tables and all columns will be allowed.
+
 ## Testing
 
-To see `DB` in action you can run `test/index.php` in a local environemnt with mysql and php installed.
+To see `DB` in action you can run `test/index.php` in a local environment with mysql and php installed.
 
 Before running these examples you'll need to set up a test database.
 
