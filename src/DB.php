@@ -465,7 +465,7 @@ class DB
         if (!$this->isValid($table, $this->validTables)) {
             $this->status[] = 'Table invalid';
 
-            return false;
+            throw new \Exception("DB: Invalid table '$table'");
         }
 
         return true;
@@ -480,7 +480,7 @@ class DB
             if (!$this->isValid($column, $this->validColumns)) {
                 $this->status[] = "Column invalid, $column";
 
-                return false;
+                throw new \Exception("DB: Invalid column '$column'");
             }
         }
 
@@ -511,7 +511,7 @@ class DB
         return $this->lastSql;
     }
 
-    public function close()
+    public function close() : bool
     {
         return $this->conn->close();
     }
