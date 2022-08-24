@@ -2,7 +2,7 @@
 
 namespace Database;
 
-use Database\DBAuthList;
+use Database\DBAllowList;
 
 class DB
 {
@@ -15,8 +15,8 @@ class DB
 
     public function __construct()
     {
-        $this->validColumns = DBAuthList::getValidColumns();
-        $this->validTables = DBAuthList::getValidTables();
+        $this->validColumns = DBAllowList::getValidColumns();
+        $this->validTables = DBAllowList::getValidTables();
         $this->connect();
     }
 
@@ -462,6 +462,9 @@ class DB
 
     private function isTableValid($table)
     {
+        if(empty($this->validTables)){
+            return true;
+        }
         if (!$this->isValid($table, $this->validTables)) {
             $this->status[] = 'Table invalid';
 
@@ -473,6 +476,9 @@ class DB
 
     private function isColumnValid($columns)
     {
+        if(empty($this->validColumns)){
+            return true;
+        }
         if (!is_array($columns)) {
             $columns = [$columns];
         }
