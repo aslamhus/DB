@@ -96,7 +96,7 @@ Now you can run test/index.php in your local environment.
 
 ## Examples
 
-### Select
+### `select`
 
 `select` can take 3 parameters. The first parameter are the columns to select, the second is the tablename and the third optional parameter is an array of conditions.
 
