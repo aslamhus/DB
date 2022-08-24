@@ -10,8 +10,10 @@ composer require aslamhus/db
 
 ## Dependencies
 
-1. composer
+1. Composer
 2. composer package "vlucas/phpdotenv"
+3. MYSQL database with access privileges
+4. PHP
 
 ---
 
@@ -19,7 +21,7 @@ composer require aslamhus/db
 
 ### Configuring your database
 
-In order to connect to your database, you'll need to set your database configuration in env variables.
+**DB** configures your database settings using environment variables. To set those up you'll need to install `vlucas/phpdotenv` and create a .env file with your database name, host, username and password.
 
 #### 1. install vlucas/phpdotenv
 
@@ -80,12 +82,43 @@ $db = new DB();
 
 That's it! You should now be connected to your database. You can begin making queries.
 
+## Testing
+
+To see `DB` in action you can run `test/index.php` in a local environemnt with mysql and php installed.
+
+Before running these examples you'll need to set up a test database.
+
+1. Login to your local mysql with admin privileges
+2. create a test database/test table by executing test/db/schema.sql
+3. add values to your test database by executing seeds.sql
+
+Now you can run test/index.php in your local environment.
+
 ## Examples
 
 ### Select
 
+`select` can take 3 parameters. The first parameter are the columns to select, the second is the tablename and the third optional parameter is an array of conditions.
+
+#### Select everything
+
 ```php
 $result = $db->select('*', 'tablename');
+print_r($result);
+```
+
+#### Select with conditions
+
+In this example we select everything from the table 'users' where a the username has a value of $username.
+
+```php
+$username = 'bob sacamano';
+$result = $db->select('*','users',
+    [
+        'username = ?' => $username
+    ]
+);
+print_r($result);
 ```
 
 ## Author
