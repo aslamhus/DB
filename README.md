@@ -1,6 +1,6 @@
 # DB
 
-A Database class for mysqli prepared statements. Has methods for MYSQL select, insert, update and delete.
+A Database class for mysqli prepared statements. Connect to your database and easily prepare statements, bind variables and execute queries. Currently Has methods for MYSQL select, insert, update and delete.
 
 ## Install
 
@@ -23,13 +23,25 @@ composer require aslamhus/db
 
 **DB** configures your database settings using environment variables. To set those up you'll need to install `vlucas/phpdotenv` and create a .env file with your database name, host, username and password.
 
-#### 1. install vlucas/phpdotenv
+#### 1. Install
+
+If you have cloned the repo, install all dependencies.
 
 ```bash
-composer require "vlucas/phpdotenv"
+composer install
 ```
 
-#### 2. create .env file in root directory with the following variables
+If you are installing `@aslamhus/db` as a package,
+simply run
+
+```bash
+composer require @aslamhus/db
+```
+
+You should now have `vlucas/phpdotenv` in your vendor directory.
+More information on [vlucas/dotenv](https://github.com/vlucas/phpdotenv)
+
+#### 2. Create .env file in your project root directory with the following variables
 
 ```bash
 // sets the development mode (possible values, "DEV" or "PRODUCTION")
@@ -48,9 +60,11 @@ DB_LUSER = "local_db_user"
 DB_LNAME = "local_db_password"
 ```
 
-#### 3. load your .env variables
+#### 3. Load your environment variables
 
 create a config.php file with the following:
+
+**Make sure you specify your path to vendor/autload and your .env file**
 
 ```php
 // require composer autoload
@@ -64,9 +78,7 @@ $dotenv->required(['DEV', 'DB_HOST', 'DB_NAME', 'DB_USER', 'DB_PASS', 'DB_LUSER'
 $dotenv->required('DEV')->allowedValues(['DEV', 'PRODUCTION']);
 ```
 
-More information on [dotenv](https://github.com/vlucas/phpdotenv)
-
-### Connect to the database
+#### 4. Connect to the database
 
 Require your config.php file and then instantiate the DB class.
 
@@ -98,7 +110,7 @@ Now you can run test/index.php in your local environment.
 
 ### `select`
 
-`select` can take 3 parameters. The first parameter are the columns to select, the second is the tablename and the third optional parameter is an array of conditions.
+`select` takes two parameters with an optional third. The first parameter is the columns to select, the second is the tablename and the third is an optional array of conditions.
 
 #### Select everything
 
@@ -109,7 +121,7 @@ print_r($result);
 
 #### Select with conditions
 
-In this example we select everything from the table 'users' where a the username has a value of $username.
+In this example we select everything from the table 'users' where a the username has a value of the variable $username.
 
 ```php
 $username = 'bob sacamano';
@@ -120,6 +132,8 @@ $result = $db->select('*','users',
 );
 print_r($result);
 ```
+
+... more examples to come!
 
 ## Author
 
