@@ -480,7 +480,12 @@ class DB
             return true;
         }
         if (!is_array($columns)) {
-            $columns = [$columns];
+            if (!is_array($columns)) {
+                // remove white space
+                $columns = preg_replace('/\s+/', '', $columns);
+                //implode string into array
+                $columns = explode(',', $columns);
+            }
         }
         foreach ($columns as $column) {
             if (!$this->isValid($column, $this->validColumns)) {

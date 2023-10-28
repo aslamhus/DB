@@ -1,0 +1,1 @@
+2023/10/28 - updated isColumnValid method to allow for string columns instead of array

@@ -11,7 +11,9 @@
     $title = 'mr. coffeehead';
 	$select = $db->select('*', 'fringe_shows', ['title = ?' => $title]);
 	echo '<h1>Select</h1>';
+	echo '<pre>';
 	print_r($select);
+	echo '</pre>';
 
     /**
      * Select all
