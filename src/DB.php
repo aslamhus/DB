@@ -14,8 +14,8 @@ class DB
 
     public function __construct()
     {
-        $this->validColumns = DBAllowList::getValidColumns();
-        $this->validTables = DBAllowList::getValidTables();
+        $this->validColumns = DBAllowList::getValidColumns($_ENV['DB_ALLOW_LIST_DIR']);
+        $this->validTables = DBAllowList::getValidTables($_ENV['DB_ALLOW_LIST_DIR']);
         $this->connect();
     }
 

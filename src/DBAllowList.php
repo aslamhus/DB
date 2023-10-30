@@ -1,5 +1,4 @@
 <?php
-
 namespace Database;
 
 class DBAllowList
@@ -12,12 +11,13 @@ class DBAllowList
      * getValidColumns
      *
      * Gets list of valid columns from .validcolumns file
-     *
+     *@param string $path path to .validcolumns file
+
      * @return array
      */
-    public static function getValidColumns() : array
+    public static function getValidColumns($path) : array
     {
-        $filepath = __DIR__ . '/.validcolumns';
+        $filepath = $path . '/.validcolumns';
         if (!file_exists($filepath)) {
             $filepath = __DIR__ . '/.validcolumns.sample';
             if (!file_exists($filepath)) {
@@ -25,7 +25,7 @@ class DBAllowList
             }
         }
         $validColumnsFile = file_get_contents($filepath);
-        if(empty($validColumnsFile)){
+        if (empty($validColumnsFile)) {
             return [];
         }
         // explode with end of line as separator
@@ -36,12 +36,13 @@ class DBAllowList
      * getValidTables
      *
      * Gets list of valid tables from .validtables file
+     * @param string $path path to .validtables file
      *
      * @return array
      */
-    public static function getValidTables() : array
+    public static function getValidTables($path) : array
     {
-        $filepath = __DIR__ . '/.validtables';
+        $filepath = $path . '/.validtables';
         if (!file_exists($filepath)) {
             $filepath = __DIR__ . '/.validtables.sample';
             if (!file_exists($filepath)) {
@@ -49,7 +50,7 @@ class DBAllowList
             }
         }
         $validTablesFile = file_get_contents($filepath);
-        if(empty($validTablesFile)){
+        if (empty($validTablesFile)) {
             return [];
         }
         // explode with end of line as separator
