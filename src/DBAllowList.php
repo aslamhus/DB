@@ -17,12 +17,10 @@ class DBAllowList
      */
     public static function getValidColumns($path) : array
     {
-        $filepath = $path . '/.validcolumns';
+        $filepath = $_SERVER['DOCUMENT_ROOT'] . $path . '/.validcolumns';
+
         if (!file_exists($filepath)) {
-            $filepath = __DIR__ . '/.validcolumns.sample';
-            if (!file_exists($filepath)) {
-                throw new \Exception('Failed to find .validcolumns or .validcolumns.sample file, cannot invoke Database');
-            }
+            throw new \Exception('Failed to find .validcolumns file, cannot invoke Database');
         }
         $validColumnsFile = file_get_contents($filepath);
         if (empty($validColumnsFile)) {
@@ -42,12 +40,9 @@ class DBAllowList
      */
     public static function getValidTables($path) : array
     {
-        $filepath = $path . '/.validtables';
+        $filepath = $_SERVER['DOCUMENT_ROOT'] . $path . '/.validtables';
         if (!file_exists($filepath)) {
-            $filepath = __DIR__ . '/.validtables.sample';
-            if (!file_exists($filepath)) {
-                throw new \Exception('Failed to find .validtables.sample or .validtables.sample file, cannot invoke Database');
-            }
+            throw new \Exception('Failed to find .validtables file, cannot invoke Database');
         }
         $validTablesFile = file_get_contents($filepath);
         if (empty($validTablesFile)) {
