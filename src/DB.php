@@ -1,5 +1,4 @@
 <?php
-
 namespace Database;
 
 use Database\DBAllowList;
@@ -8,16 +7,21 @@ class DB
 {
     private $conn;
     private $status;
-
     private $lastSql;
     private $validColumns;
     private $validTables;
+    private $searchResult;
 
     public function __construct()
     {
         $this->validColumns = DBAllowList::getValidColumns();
         $this->validTables = DBAllowList::getValidTables();
         $this->connect();
+    }
+
+    public function getConn()
+    {
+        return $this->conn;
     }
 
     private function connect()
@@ -462,7 +466,7 @@ class DB
 
     private function isTableValid($table)
     {
-        if(empty($this->validTables)){
+        if (empty($this->validTables)) {
             return true;
         }
         if (!$this->isValid($table, $this->validTables)) {
@@ -476,16 +480,14 @@ class DB
 
     private function isColumnValid($columns)
     {
-        if(empty($this->validColumns)){
+        if (empty($this->validColumns)) {
             return true;
         }
         if (!is_array($columns)) {
-            if (!is_array($columns)) {
-                // remove white space
-                $columns = preg_replace('/\s+/', '', $columns);
-                //implode string into array
-                $columns = explode(',', $columns);
-            }
+            // remove white space
+            $columns = preg_replace('/\s+/', '', $columns);
+            //implode string into array
+            $columns = explode(',', $columns);
         }
         foreach ($columns as $column) {
             if (!$this->isValid($column, $this->validColumns)) {
@@ -510,6 +512,41 @@ class DB
         }
 
         return true;
+    }
+
+    public function search($sqlToPrepare, $types, $vars)
+    {
+        //if(!$this->isSearchValid($sqlToPrepare)){ return false; }
+        if (!$query = $this->conn->prepare($sqlToPrepare)) {
+            $this->status[] = 'Search failed. Prepare Error: ' . $this->conn->error;
+            print_r($this->getErrorReport());
+
+            return false;
+        }
+        if (!$query->bind_param($types, ...$vars)) {
+            $this->status[] = 'Search failed. Bind Error: ' . $query->error;
+
+            return false;
+        }
+        if (!$query->execute()) {
+            $this->status[] = 'Search failed. Execute Error: ' . $query->error;
+
+            return false;
+        }
+        $result = $query->get_result();
+        if (!$result) {
+            $this->status[] = 'Search failed. Result error: ' . $query->error;
+
+            return false;
+        }
+
+        $searchArray = [];
+        while ($row = $result->fetch_assoc()) {
+            $searchArray[] = $row;
+        }
+        $this->searchResult = $searchArray;
+
+        return $searchArray;
     }
 
     public function getErrorReport()
