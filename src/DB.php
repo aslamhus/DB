@@ -33,14 +33,15 @@ class DB
                 $_ENV['DB_LNAME'],
                 $_ENV['DB_NAME']
             );
-        } elseif ($_ENV['DEV'] === 'PRODUCTION') {
+        } else  {
+            // for production or staging or other environment
             $this->conn = new \mysqli(
                 $_ENV['DB_HOST'],
                 $_ENV['DB_USER'],
                 $_ENV['DB_PASS'],
                 $_ENV['DB_NAME']
             );
-        }
+        }  
 
         if ($this->conn->connect_error) {
             die('Connection failed: ' . $this->conn->connect_error);
@@ -370,6 +371,7 @@ class DB
         if (!$query = $this->conn->prepare($sql)) {
             $this->status[] = 'Delete prepare failed. Error: ' . $this->conn->error;
             $this->status[] = $sql;
+
             // echo $sql;
             return false;
         }
